@@ -1,0 +1,52 @@
+@* ViewBag.CurrentUser *@
+@* ViewBag.AllWeddings *@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Dojo Activity Center  Welcome  @ViewBag.CurrentUser.Name</h1>
+    <a href="/LogOut">LogOut</a>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Activity</th>
+            <th>Date and Time</th>
+            <th>Duration</th>
+            <th>Event Coordinator</th>
+            <th>No. of Participants</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Event w in ViewBag.AllEvents)
+        {
+            <tr>
+                <td><a href="/Event/@w.EventId">@w.Title</a></td>
+                <td>@w.Date.ToString("d") At @w.Time.ToString("t")</td>
+                <td>@w.Duration  @w.Type</td>
+                <td>@w.PostedBy.Name</td>
+                <td>@w.Guests.Count</td>
+                <td>@if (ViewBag.CurrentUser.UserId == w.PostedBy.UserId)
+                    {
+                        <form action="/Guest/@w.EventId/Delete" method="post"><button class="btn btn-danger">Delete</button>
+                        </form>
+                    }
+                    else if (w.Guests.Any(guest => guest.UserId == ViewBag.CurrentUser.UserId))
+                    {
+                        <form action="/Guest/@w.EventId/Guest/Delete" method="post"><button
+                                class="btn btn-warning">Leave</button></form>
+                    }
+                    else
+                {
+                <form action="/Guest/@w.EventId/Guest" method="post"><button class="btn btn-primary">Join</button>
+                </form>
+                }
+
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<a href="/Event">Add a New Event</a>

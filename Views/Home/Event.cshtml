@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model Event
+
+<div class="text-center">
+    <h1 class="display-4">Plan a new Activity</h1>
+    <a href="/LogOut">LogOut</a> ||  <a href="/Dashboard">Dashboard</a>
+</div>
+  <form action="/Event/New" method="post">
+            <div class="Left">
+            <div class="form-goup">
+            <label asp-for="Title"></label>
+            <input asp-for="Title" class="form-control">
+            <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        <div class="form-goup">
+            <label asp-for="Date"></label>
+            <input asp-for="Date" class="form-control">
+            <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+        <div class="form-goup">
+            <label asp-for="Time"></label>
+            <input asp-for="Time" class="form-control">
+            <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+        <div class="form-goup">
+            <label asp-for="Duration"></label>
+            <input asp-for="Duration" class="form-control">
+            <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+        <div class="form-goup">
+            <label asp-for="Type"></label>
+            <select asp-for="Type" class="form-control">
+                <option value="null">Select One</option>
+                <option value="Minutes">Minutes</option>
+                <option value="Days">Days</option>
+            </select>
+            <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+        <div class="form-goup">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control">
+            <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <button>Create Activity</button>
+        </form>
+</div>

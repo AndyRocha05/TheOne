@@ -1,0 +1,31 @@
+      @{
+        Event w = ViewBag.Event;
+    }
+    <h1 class="display-4">@ViewBag.Event.Title </h1>
+    <a href="/LogOut">LogOut</a><a href="/Dashboard">Dashboard</a>
+    <h2>Event Coordinator: @ViewBag.Event.PostedBy.Name</h2>
+
+    <h3>Discription:</h3>
+    <p>@ViewBag.Event.Description</p>
+    <h3>Participants:</h3>
+    <ul>
+        @foreach(var guest in @ViewBag.Event.Guests){
+
+        <li>@guest.UserToEvent.Name</li>
+        }
+    </ul>
+@if (ViewBag.CurrentUser.UserId == w.PostedBy.UserId)
+                    {
+                        <form action="/Guest/@w.EventId/Delete" method="post"><button class="btn btn-danger">Delete</button>
+                        </form>
+                    }
+                    else if (w.Guests.Any(guest => guest.UserId == ViewBag.CurrentUser.UserId))
+                    {
+                        <form action="/Guest/@w.EventId/Guest/Delete" method="post"><button
+                                class="btn btn-warning">Leave</button></form>
+                    }
+                    else
+                {
+                <form action="/Guest/@w.EventId/Guest" method="post"><button class="btn btn-primary">Join</button>
+                </form>
+                }
